@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <nav className="bg-gray-900 text-white p-4 shadow-lg">
           <div className="container mx-auto flex justify-between items-center">
-            <h1 className="text-2xl font-bold">Shadow Legion</h1>
+            <h1 className="text-2xl font-bold">Command Raid Conquer</h1>
             <div className="space-x-6">
               <Link href="/" className="hover:text-blue-400 transition">Home</Link>
               <Link href="/enlist" className="hover:text-blue-400 transition">Enlist</Link>
