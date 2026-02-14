@@ -8,8 +8,11 @@ export default function EnlistPage() {
     roblox_username: '',
     discord_username: '',
     age: '',
-    experience: '',
-    why_join: ''
+    play_duration: '',
+    rebirths: '',
+    previous_factions: '',
+    role: '',
+    contribution: ''
   })
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [message, setMessage] = useState('')
@@ -19,7 +22,8 @@ export default function EnlistPage() {
     setStatus('loading')
     setMessage('')
 
-    if (!formData.roblox_username || !formData.discord_username || !formData.age) {
+    if (!formData.roblox_username || !formData.discord_username || !formData.age || 
+        !formData.play_duration || !formData.rebirths || !formData.role || !formData.contribution) {
       setStatus('error')
       setMessage('Please fill in all required fields')
       return
@@ -40,8 +44,11 @@ export default function EnlistPage() {
             roblox_username: formData.roblox_username,
             discord_username: formData.discord_username,
             age: age,
-            experience: formData.experience,
-            why_join: formData.why_join,
+            play_duration: formData.play_duration,
+            rebirths: formData.rebirths,
+            previous_factions: formData.previous_factions,
+            role: formData.role,
+            contribution: formData.contribution,
             status: 'pending'
           }
         ])
@@ -54,8 +61,11 @@ export default function EnlistPage() {
         roblox_username: '',
         discord_username: '',
         age: '',
-        experience: '',
-        why_join: ''
+        play_duration: '',
+        rebirths: '',
+        previous_factions: '',
+        role: '',
+        contribution: ''
       })
     } catch (error) {
       console.error('Error submitting application:', error)
@@ -64,7 +74,7 @@ export default function EnlistPage() {
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -78,9 +88,11 @@ export default function EnlistPage() {
       </h1>
 
       <div className="bg-white rounded-lg shadow-md p-8">
-        <p className="text-gray-600 mb-6">
-          Fill out the application below. Staff will review it and contact you on Discord.
-        </p>
+        <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+          <p className="text-sm text-yellow-700">
+            ⚠️ This form will be submitted to our staff. Do not share passwords or other sensitive information.
+          </p>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -131,33 +143,74 @@ export default function EnlistPage() {
 
           <div>
             <label className="block text-gray-700 font-semibold mb-2">
-              War Tycoon Experience
+              How long have you played War Tycoon? <span className="text-red-500">*</span>
             </label>
-            <select
-              name="experience"
-              value={formData.experience}
+            <input
+              type="text"
+              name="play_duration"
+              value={formData.play_duration}
               onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="">Select experience level</option>
-              <option value="beginner">Beginner (0-3 months)</option>
-              <option value="intermediate">Intermediate (3-12 months)</option>
-              <option value="experienced">Experienced (1+ years)</option>
-              <option value="veteran">Veteran (2+ years)</option>
-            </select>
+              placeholder='e.g., "2 years 3 months"'
+              required
+            />
           </div>
 
           <div>
             <label className="block text-gray-700 font-semibold mb-2">
-              Why do you want to join CRC?
+              How many rebirths do you have? <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              name="rebirths"
+              value={formData.rebirths}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder='e.g., "48"'
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 font-semibold mb-2">
+              Which factions have you served in before?
+            </label>
+            <input
+              type="text"
+              name="previous_factions"
+              value={formData.previous_factions}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder='e.g., "Shadow Ops, Iron Brigade"'
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 font-semibold mb-2">
+              What role do you excel at? <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder='e.g., "Engineer, Infantry, Pilot"'
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 font-semibold mb-2">
+              How can you contribute to CRC's success? <span className="text-red-500">*</span>
             </label>
             <textarea
-              name="why_join"
-              value={formData.why_join}
+              name="contribution"
+              value={formData.contribution}
               onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               rows={4}
-              placeholder="Optional"
+              required
             />
           </div>
 
@@ -174,7 +227,7 @@ export default function EnlistPage() {
             disabled={status === 'loading'}
             className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
           >
-            {status === 'loading' ? 'Submitting...' : 'Submit Application'}
+            {status === 'loading' ? 'Submitting...' : 'Submit'}
           </button>
         </form>
       </div>
