@@ -6,8 +6,8 @@ import Link from 'next/link'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Shadow Legion | Elite Roblox Faction',
-  description: 'Official website of the Shadow Legion faction',
+  title: 'Command Raid Conquer | Elite War Tycoon Faction',
+  description: 'Official website of CRC',
 }
 
 export default function RootLayout({
@@ -33,7 +33,7 @@ export default function RootLayout({
           {children}
         </main>
         <footer className="bg-gray-900 text-white text-center p-6">
-          <p>&copy; 2024 Shadow Legion. All rights reserved.</p>
+          <p>&copy; 2026 Command Raid Conquer. All rights reserved.</p>
         </footer>
       </body>
     </html>
