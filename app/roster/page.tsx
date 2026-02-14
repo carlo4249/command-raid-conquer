@@ -27,7 +27,6 @@ async function getMembers() {
 export default async function RosterPage() {
   const members = await getMembers()
 
-  // Group members by rank
   const rankOrder = ['Commander', 'Officer', 'Sergeant', 'Corporal', 'Private', 'Recruit']
   const membersByRank = rankOrder.reduce((acc, rank) => {
     acc[rank] = members.filter(m => m.rank === rank)
@@ -37,13 +36,13 @@ export default async function RosterPage() {
   return (
     <div className="container mx-auto px-4 py-12">
       <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">
-        Member Roster
+        Roster
       </h1>
 
       <div className="bg-white rounded-lg shadow-md p-8">
         <div className="mb-6 text-center">
           <p className="text-gray-600">
-            Total Active Members: <span className="font-bold text-blue-600">{members.length}</span>
+            Active Members: <span className="font-bold text-blue-600">{members.length}</span>
           </p>
         </div>
 
@@ -80,7 +79,7 @@ export default async function RosterPage() {
 
         {members.length === 0 && (
           <div className="text-center text-gray-500 py-12">
-            No members found. Start recruiting!
+            No members yet.
           </div>
         )}
       </div>
