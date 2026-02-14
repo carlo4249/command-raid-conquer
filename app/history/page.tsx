@@ -27,7 +27,7 @@ export default async function HistoryPage() {
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
       <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">
-        Clan History
+        History
       </h1>
 
       <div className="bg-white rounded-lg shadow-md p-8">
@@ -58,7 +58,7 @@ export default async function HistoryPage() {
           </div>
         ) : (
           <div className="text-center text-gray-500 py-12">
-            <p>No history events yet. Your legacy begins now!</p>
+            <p>No history recorded yet.</p>
           </div>
         )}
       </div>
