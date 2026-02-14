@@ -22,7 +22,7 @@ export default function EnlistPage() {
     
     const embed = {
       title: '🎖️ New Enlistment Application',
-      color: 0x3B82F6, // Blue
+      color: 0x3B82F6,
       fields: [
         { name: 'Roblox Username', value: data.roblox_username, inline: true },
         { name: 'Discord', value: data.discord_username, inline: true },
@@ -38,13 +38,18 @@ export default function EnlistPage() {
     }
 
     try {
-      await fetch(webhookUrl, {
+      const response = await fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ embeds: [embed] })
       })
+      
+      if (!response.ok) {
+        console.error('Discord webhook failed:', response.status, await response.text())
+      }
     } catch (error) {
       console.error('Failed to send Discord notification:', error)
+      // Don't throw - we still want the DB save to succeed
     }
   }
 
@@ -68,7 +73,8 @@ export default function EnlistPage() {
     }
 
     try {
-      const { error } = await supabase
+      // Save to database
+      const { error: dbError } = await supabase
         .from('enlistment_requests')
         .insert([
           {
@@ -84,10 +90,15 @@ export default function EnlistPage() {
           }
         ])
 
-      if (error) throw error
+      if (dbError) {
+        console.error('Database error:', dbError)
+        throw dbError
+      }
 
-      // Send Discord notification
-      await sendDiscordNotification(formData)
+      // Send Discord notification (non-blocking)
+      sendDiscordNotification(formData).catch(err => {
+        console.error('Discord notification failed but form saved:', err)
+      })
 
       setStatus('success')
       setMessage('Application submitted. Staff will review it shortly.')
@@ -101,10 +112,10 @@ export default function EnlistPage() {
         role: '',
         contribution: ''
       })
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error submitting application:', error)
       setStatus('error')
-      setMessage('Failed to submit application. Please try again.')
+      setMessage(`Failed to submit: ${error.message || 'Please try again'}`)
     }
   }
 
