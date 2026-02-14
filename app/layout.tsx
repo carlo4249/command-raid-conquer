@@ -24,6 +24,7 @@ export default function RootLayout({
             <div className="space-x-6">
               <Link href="/" className="hover:text-blue-400 transition">Home</Link>
               <Link href="/enlist" className="hover:text-blue-400 transition">Enlist</Link>
+              <Link href="/alliance" className="hover:text-blue-400 transition">Alliance</Link>
               <Link href="/roster" className="hover:text-blue-400 transition">Roster</Link>
               <Link href="/history" className="hover:text-blue-400 transition">History</Link>
             </div>
