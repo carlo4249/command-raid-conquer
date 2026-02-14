@@ -17,6 +17,37 @@ export default function EnlistPage() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [message, setMessage] = useState('')
 
+  const sendDiscordNotification = async (data: typeof formData) => {
+    const webhookUrl = 'https://discord.com/api/webhooks/1472052557756235887/tUPsDeFhnwlZbos1aZ-4P3phFjl18L8sRC-V6Q18Ric3-TKGNeX6EwPxDNJDmU8wjKKe'
+    
+    const embed = {
+      title: '🎖️ New Enlistment Application',
+      color: 0x3B82F6, // Blue
+      fields: [
+        { name: 'Roblox Username', value: data.roblox_username, inline: true },
+        { name: 'Discord', value: data.discord_username, inline: true },
+        { name: 'Age', value: data.age, inline: true },
+        { name: 'Play Duration', value: data.play_duration, inline: false },
+        { name: 'Rebirths', value: data.rebirths, inline: true },
+        { name: 'Previous Factions', value: data.previous_factions || 'None', inline: false },
+        { name: 'Role', value: data.role, inline: false },
+        { name: 'Contribution', value: data.contribution, inline: false }
+      ],
+      timestamp: new Date().toISOString(),
+      footer: { text: 'CRC Enlistment System' }
+    }
+
+    try {
+      await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ embeds: [embed] })
+      })
+    } catch (error) {
+      console.error('Failed to send Discord notification:', error)
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setStatus('loading')
@@ -54,6 +85,9 @@ export default function EnlistPage() {
         ])
 
       if (error) throw error
+
+      // Send Discord notification
+      await sendDiscordNotification(formData)
 
       setStatus('success')
       setMessage('Application submitted. Staff will review it shortly.')
