@@ -21,7 +21,7 @@ export default function EnlistPage() {
     const webhookUrl = 'https://discord.com/api/webhooks/1472052557756235887/tUPsDeFhnwlZbos1aZ-4P3phFjl18L8sRC-V6Q18Ric3-TKGNeX6EwPxDNJDmU8wjKKe'
     
     const embed = {
-      title: '🎖️ New Enlistment Application',
+      title: 'ðŸŽ–ï¸ New Enlistment Application',
       color: 0x3B82F6,
       fields: [
         { name: 'Roblox Username', value: data.roblox_username, inline: true },
@@ -127,142 +127,174 @@ export default function EnlistPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-2xl">
-      <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">
-        Apply to CRC
-      </h1>
+    <div className="container mx-auto px-4 py-16" style={{ maxWidth: '680px', position: 'relative', zIndex: 10 }}>
 
-      <div className="bg-white rounded-lg shadow-md p-8">
-        <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
-          <p className="text-sm text-yellow-700">
-            ⚠️ This form will be submitted to our staff. Do not share passwords or other sensitive information.
-          </p>
+      {/* Header */}
+      <div className="text-center animate-fade-up" style={{ marginBottom: '40px' }}>
+        <div className="tag" style={{ marginBottom: '16px' }}>// ENLISTMENT TERMINAL</div>
+        <h1 style={{
+          fontFamily: "'Barlow Condensed', sans-serif",
+          fontWeight: 800,
+          fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+          letterSpacing: '0.06em',
+          textTransform: 'uppercase',
+          color: 'var(--text-bright)',
+        }}>
+          Apply to CRC
+        </h1>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px', marginTop: '12px' }}>
+          <div style={{ width: 40, height: 1, background: 'var(--border)' }} />
+          <div style={{ color: 'var(--gold)', fontSize: '0.5rem' }}>◆</div>
+          <div style={{ width: 40, height: 1, background: 'var(--border)' }} />
+        </div>
+      </div>
+
+      <div className="panel animate-fade-up-d1" style={{ padding: '40px' }}>
+
+        {/* Warning */}
+        <div className="alert-warning" style={{ marginBottom: '32px' }}>
+          ⚠ NOTICE: This submission is reviewed by CRC staff. Do not include passwords or sensitive credentials.
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              Roblox Username <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              name="roblox_username"
-              value={formData.roblox_username}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="YourRobloxName"
-              required
-            />
+        {/* Progress indicator */}
+        <div className="mono" style={{
+          fontSize: '0.62rem',
+          letterSpacing: '0.15em',
+          color: 'var(--text-muted)',
+          marginBottom: '32px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+        }}>
+          <span style={{ color: 'var(--gold)' }}>■</span>
+          FORM REF: ENL-{new Date().getFullYear()}
+          <span style={{ marginLeft: 'auto', color: 'var(--green)' }}>SECURE CHANNEL</span>
+        </div>
+
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <div>
+              <label className="field-label">
+                Roblox Username <span style={{ color: '#c46060' }}>*</span>
+              </label>
+              <input
+                type="text"
+                name="roblox_username"
+                value={formData.roblox_username}
+                onChange={handleChange}
+                className="field-input"
+                placeholder="YourRobloxName"
+                required
+              />
+            </div>
+            <div>
+              <label className="field-label">
+                Discord Username <span style={{ color: '#c46060' }}>*</span>
+              </label>
+              <input
+                type="text"
+                name="discord_username"
+                value={formData.discord_username}
+                onChange={handleChange}
+                className="field-input"
+                placeholder="username"
+                required
+              />
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <div>
+              <label className="field-label">
+                Age <span style={{ color: '#c46060' }}>*</span>
+              </label>
+              <input
+                type="number"
+                name="age"
+                value={formData.age}
+                onChange={handleChange}
+                className="field-input"
+                min="13"
+                max="99"
+                required
+              />
+            </div>
+            <div>
+              <label className="field-label">
+                Rebirths <span style={{ color: '#c46060' }}>*</span>
+              </label>
+              <input
+                type="text"
+                name="rebirths"
+                value={formData.rebirths}
+                onChange={handleChange}
+                className="field-input"
+                placeholder='e.g., "48"'
+                required
+              />
+            </div>
           </div>
 
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              Discord Username <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              name="discord_username"
-              value={formData.discord_username}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="username or @username"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              Age <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="number"
-              name="age"
-              value={formData.age}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              min="13"
-              max="99"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              How long have you played War Tycoon? <span className="text-red-500">*</span>
+            <label className="field-label">
+              How long have you played War Tycoon? <span style={{ color: '#c46060' }}>*</span>
             </label>
             <input
               type="text"
               name="play_duration"
               value={formData.play_duration}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="field-input"
               placeholder='e.g., "2 years 3 months"'
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              How many rebirths do you have? <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              name="rebirths"
-              value={formData.rebirths}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder='e.g., "48"'
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              Which factions have you served in before?
-            </label>
+            <label className="field-label">Previous Factions Served</label>
             <input
               type="text"
               name="previous_factions"
               value={formData.previous_factions}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder='e.g., "Shadow Ops, Iron Brigade"'
+              className="field-input"
+              placeholder='e.g., "Shadow Ops, Iron Brigade" — leave blank if none'
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              What role do you excel at? <span className="text-red-500">*</span>
+            <label className="field-label">
+              Primary Role / Specialization <span style={{ color: '#c46060' }}>*</span>
             </label>
             <input
               type="text"
               name="role"
               value={formData.role}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="field-input"
               placeholder='e.g., "Engineer, Infantry, Pilot"'
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              How can you contribute to CRC's success? <span className="text-red-500">*</span>
+            <label className="field-label">
+              How will you contribute to CRC? <span style={{ color: '#c46060' }}>*</span>
             </label>
             <textarea
               name="contribution"
               value={formData.contribution}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              rows={4}
+              className="field-input"
+              rows={5}
+              style={{ resize: 'vertical' }}
               required
             />
           </div>
 
           {message && (
-            <div className={`p-4 rounded-lg ${
-              status === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-            }`}>
+            <div className={status === 'success' ? 'alert-success' : 'alert-error'}>
               {message}
             </div>
           )}
@@ -270,10 +302,12 @@ export default function EnlistPage() {
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="btn-primary"
+            style={{ width: '100%', fontSize: '1rem', padding: '14px' }}
           >
-            {status === 'loading' ? 'Submitting...' : 'Submit'}
+            {status === 'loading' ? '[ TRANSMITTING... ]' : '[ SUBMIT APPLICATION ]'}
           </button>
+
         </form>
       </div>
     </div>
