@@ -36,33 +36,18 @@ export default function NavClient() {
 
       <div className="container mx-auto px-6 flex justify-between items-center" style={{ height: '56px' }}>
         {/* Logo */}
-        <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '12px' }}>
-          {/* Hexagon icon */}
-          <svg width="26" height="30" viewBox="0 0 26 30" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ animation: 'float 4s ease-in-out infinite' }}>
-            <polygon
-              points="13,1 25,7.5 25,22.5 13,29 1,22.5 1,7.5"
-              fill="none"
-              stroke="var(--blue-bright)"
-              strokeWidth="1.5"
-            />
-            <polygon
-              points="13,6 21,10.5 21,19.5 13,24 5,19.5 5,10.5"
-              fill="none"
-              stroke="var(--blue)"
-              strokeWidth="1"
-              opacity="0.5"
-            />
-            <text
-              x="13" y="19"
-              textAnchor="middle"
-              fill="var(--blue-glow)"
-              fontSize="10"
-              fontFamily="Rajdhani, sans-serif"
-              fontWeight="700"
-            >
-              CRC
-            </text>
-          </svg>
+        <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          {/* CRC Logo image */}
+          <img
+            src="/crc-logo.png"
+            alt="CRC Logo"
+            style={{
+              height: '38px',
+              width: 'auto',
+              objectFit: 'contain',
+              filter: 'drop-shadow(0 0 6px rgba(37,99,235,0.5))',
+            }}
+          />
           <div>
             <div style={{
               fontFamily: "'Rajdhani', sans-serif",
