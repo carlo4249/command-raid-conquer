@@ -4,158 +4,170 @@ export default async function Home() {
   return (
     <div style={{ position: 'relative', zIndex: 10 }}>
 
-      {/* ── Hero ──────────────────────────────────────────────── */}
-      <section
-        style={{
-          minHeight: '85vh',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          padding: '80px 24px',
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        {/* Background radial glow */}
+      {/* ── Hero with GIF background ─────────────────────── */}
+      <section style={{
+        position: 'relative',
+        minHeight: '92vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        padding: '80px 24px',
+        overflow: 'hidden',
+      }}>
+
+        {/* GIF background */}
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(61,92,48,0.12) 0%, transparent 70%)',
+          zIndex: 0,
+        }}>
+          <img
+            src="/Untitled_design.gif"
+            alt=""
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center',
+              opacity: 0.35,
+            }}
+          />
+          {/* Dark overlay gradient */}
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(180deg, rgba(4,8,15,0.55) 0%, rgba(4,8,15,0.2) 40%, rgba(4,8,15,0.7) 80%, rgba(4,8,15,1) 100%)',
+          }} />
+          {/* Side vignettes */}
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'radial-gradient(ellipse 80% 100% at 50% 50%, transparent 40%, rgba(4,8,15,0.8) 100%)',
+          }} />
+          {/* Blue tint overlay */}
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'radial-gradient(ellipse 60% 50% at 50% 60%, rgba(37,99,235,0.08) 0%, transparent 70%)',
+          }} />
+        </div>
+
+        {/* Scanning line animation */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 1,
+          overflow: 'hidden',
           pointerEvents: 'none',
-        }} />
+        }}>
+          <div style={{
+            position: 'absolute',
+            left: 0, right: 0,
+            height: '2px',
+            background: 'linear-gradient(90deg, transparent, rgba(59,130,246,0.4), transparent)',
+            animation: 'sweep 6s ease-in-out infinite',
+            animationDelay: '1s',
+          }} />
+        </div>
 
         {/* Corner decorations */}
-        <div style={{
-          position: 'absolute', top: 32, left: 32,
-          width: 60, height: 60,
-          borderTop: '1px solid var(--border)',
-          borderLeft: '1px solid var(--border)',
-        }} />
-        <div style={{
-          position: 'absolute', top: 32, right: 32,
-          width: 60, height: 60,
-          borderTop: '1px solid var(--border)',
-          borderRight: '1px solid var(--border)',
-        }} />
-        <div style={{
-          position: 'absolute', bottom: 32, left: 32,
-          width: 60, height: 60,
-          borderBottom: '1px solid var(--border)',
-          borderLeft: '1px solid var(--border)',
-        }} />
-        <div style={{
-          position: 'absolute', bottom: 32, right: 32,
-          width: 60, height: 60,
-          borderBottom: '1px solid var(--border)',
-          borderRight: '1px solid var(--border)',
-        }} />
+        {[
+          { top: 24, left: 24, borderTop: true, borderLeft: true },
+          { top: 24, right: 24, borderTop: true, borderRight: true },
+          { bottom: 24, left: 24, borderBottom: true, borderLeft: true },
+          { bottom: 24, right: 24, borderBottom: true, borderRight: true },
+        ].map((pos, i) => (
+          <div key={i} style={{
+            position: 'absolute',
+            width: 48,
+            height: 48,
+            borderTop: pos.borderTop ? '1px solid rgba(59,130,246,0.4)' : 'none',
+            borderBottom: pos.borderBottom ? '1px solid rgba(59,130,246,0.4)' : 'none',
+            borderLeft: pos.borderLeft ? '1px solid rgba(59,130,246,0.4)' : 'none',
+            borderRight: pos.borderRight ? '1px solid rgba(59,130,246,0.4)' : 'none',
+            top: pos.top,
+            bottom: pos.bottom,
+            left: pos.left,
+            right: pos.right,
+            zIndex: 2,
+            animation: 'fadeIn 1.2s ease both',
+            animationDelay: `${i * 0.15}s`,
+          }} />
+        ))}
 
         {/* Content */}
-        <div className="animate-fade-in" style={{ position: 'relative' }}>
-          <div className="tag animate-fade-up" style={{ marginBottom: '24px' }}>
-            WAR TYCOON // ACTIVE FACTION
+        <div style={{ position: 'relative', zIndex: 3 }}>
+
+          <div className="tag anim-down" style={{ marginBottom: '32px' }}>
+            War Tycoon Faction
           </div>
 
           <h1
-            className="animate-fade-up-d1"
+            className="anim-up d1"
             style={{
-              fontFamily: "'Barlow Condensed', sans-serif",
-              fontWeight: 800,
-              fontSize: 'clamp(3rem, 10vw, 7rem)',
-              letterSpacing: '0.06em',
+              fontFamily: "'Rajdhani', sans-serif",
+              fontWeight: 700,
+              fontSize: 'clamp(3.5rem, 12vw, 8rem)',
+              letterSpacing: '0.04em',
               textTransform: 'uppercase',
-              color: 'var(--text-bright)',
-              lineHeight: 0.95,
-              marginBottom: '8px',
+              lineHeight: 0.92,
+              marginBottom: '24px',
             }}
           >
-            Command
-          </h1>
-          <h1
-            className="animate-fade-up-d2"
-            style={{
-              fontFamily: "'Barlow Condensed', sans-serif",
-              fontWeight: 800,
-              fontSize: 'clamp(3rem, 10vw, 7rem)',
-              letterSpacing: '0.06em',
-              textTransform: 'uppercase',
-              color: 'var(--gold)',
-              lineHeight: 0.95,
-              marginBottom: '8px',
-            }}
-          >
-            Raid
-          </h1>
-          <h1
-            className="animate-fade-up-d3"
-            style={{
-              fontFamily: "'Barlow Condensed', sans-serif",
-              fontWeight: 800,
-              fontSize: 'clamp(3rem, 10vw, 7rem)',
-              letterSpacing: '0.06em',
-              textTransform: 'uppercase',
-              color: 'var(--text-bright)',
-              lineHeight: 0.95,
-              marginBottom: '32px',
-            }}
-          >
-            Conquer
+            <span style={{ display: 'block', color: 'var(--text-bright)' }}>Command</span>
+            <span className="text-shimmer" style={{ display: 'block', fontSize: 'clamp(4rem, 14vw, 9.5rem)' }}>Raid</span>
+            <span style={{ display: 'block', color: 'var(--text-bright)' }}>Conquer</span>
           </h1>
 
           <p
-            className="animate-fade-up-d4"
+            className="mono anim-up d4"
             style={{
-              fontFamily: "'Share Tech Mono', monospace",
-              fontSize: '0.9rem',
+              fontSize: '0.78rem',
               color: 'var(--text-muted)',
-              letterSpacing: '0.08em',
-              maxWidth: '480px',
+              letterSpacing: '0.14em',
+              maxWidth: '360px',
               margin: '0 auto 40px',
+              lineHeight: 1.8,
             }}
           >
-            ELITE COMPETITIVE FACTION — COORDINATED TACTICS — PROVEN RESULTS
+            COORDINATED TACTICS / COMPETITIVE PLAY
           </p>
 
-          <div className="animate-fade-up-d5 flex justify-center gap-4 flex-wrap">
-            <Link href="/enlist" className="btn-primary" style={{ textDecoration: 'none', display: 'inline-block' }}>
-              ⬡ Enlist Now
+          <div className="anim-up d5" style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
+            <Link href="/enlist" className="btn-primary">
+              Enlist Now
             </Link>
-            <Link href="/roster" className="btn-secondary" style={{ textDecoration: 'none', display: 'inline-block' }}>
+            <Link href="/roster" className="btn-secondary">
               View Roster
             </Link>
           </div>
         </div>
 
-        {/* Bottom separator */}
+        {/* Bottom fade */}
         <div style={{
-          position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)',
-          display: 'flex', alignItems: 'center', gap: '8px',
-        }}>
-          <div style={{ width: 40, height: 1, background: 'var(--border)' }} />
-          <div style={{ color: 'var(--gold)', fontSize: '0.5rem' }}>◆</div>
-          <div style={{ width: 40, height: 1, background: 'var(--border)' }} />
-        </div>
+          position: 'absolute',
+          bottom: 0, left: 0, right: 0,
+          height: '120px',
+          background: 'linear-gradient(0deg, var(--bg) 0%, transparent 100%)',
+          zIndex: 2,
+          pointerEvents: 'none',
+        }} />
       </section>
 
-      {/* ── Stats Bar ──────────────────────────────────────────── */}
-      <section
-        style={{
-          background: 'var(--bg-panel)',
-          borderTop: '1px solid var(--border)',
-          borderBottom: '1px solid var(--border)',
-          padding: '24px',
-        }}
-      >
-        <div
-          className="container mx-auto"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
-            gap: '0',
-          }}
-        >
+      {/* ── Stats strip ──────────────────────────────────── */}
+      <section style={{
+        background: 'var(--bg-panel)',
+        borderTop: '1px solid var(--border)',
+        borderBottom: '1px solid var(--border)',
+        padding: '0',
+        overflow: 'hidden',
+      }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(4, 1fr)',
+        }}>
           {[
             { value: 'ACTIVE', label: 'Status' },
             { value: 'DAILY', label: 'Operations' },
@@ -164,120 +176,146 @@ export default async function Home() {
           ].map((stat, i) => (
             <div
               key={i}
-              className="animate-fade-up"
+              className="anim-up"
               style={{
                 textAlign: 'center',
-                padding: '16px',
+                padding: '28px 16px',
                 borderRight: i < 3 ? '1px solid var(--border-dim)' : 'none',
-                animationDelay: `${i * 0.1}s`,
+                animationDelay: `${i * 0.08}s`,
+                position: 'relative',
+                overflow: 'hidden',
               }}
             >
               <div style={{
-                fontFamily: "'Barlow Condensed', sans-serif",
-                fontWeight: 800,
-                fontSize: '1.6rem',
+                position: 'absolute',
+                bottom: 0, left: 0, right: 0,
+                height: '2px',
+                background: 'linear-gradient(90deg, transparent, var(--blue), transparent)',
+                transform: 'scaleX(0)',
+                transformOrigin: 'center',
+                transition: 'transform 0.4s',
+              }} className="stat-underline" />
+              <div style={{
+                fontFamily: "'Rajdhani', sans-serif",
+                fontWeight: 700,
+                fontSize: '1.5rem',
                 letterSpacing: '0.1em',
-                color: 'var(--gold)',
+                color: 'var(--blue-glow)',
               }}>
                 {stat.value}
               </div>
-              <div className="mono" style={{ fontSize: '0.62rem', color: 'var(--text-muted)', letterSpacing: '0.15em' }}>
-                {stat.label.toUpperCase()}
+              <div className="mono" style={{ fontSize: '0.58rem', color: 'var(--text-muted)', letterSpacing: '0.18em', textTransform: 'uppercase', marginTop: '2px' }}>
+                {stat.label}
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ── About ──────────────────────────────────────────────── */}
+      {/* ── About ─────────────────────────────────────────── */}
       <section className="container mx-auto px-6 py-20">
-        <div className="section-header animate-fade-up">
-          <span className="tag">// ABOUT</span>
+        <div className="section-header anim-right">
+          <span className="tag">About</span>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
-          <div className="panel animate-fade-up-d1" style={{ padding: '32px' }}>
-            <div className="mono" style={{ fontSize: '0.65rem', color: 'var(--gold)', letterSpacing: '0.15em', marginBottom: '12px' }}>
-              DIRECTIVE 01 // OVERVIEW
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+          <div className="panel anim-left d1" style={{ padding: '32px' }}>
+            <div className="mono" style={{ fontSize: '0.6rem', color: 'var(--blue-bright)', letterSpacing: '0.16em', marginBottom: '12px' }}>
+              01 / OVERVIEW
             </div>
-            <h2 style={{ fontSize: '1.6rem', marginBottom: '16px' }}>About CRC</h2>
-            <p style={{ color: 'var(--text)', lineHeight: 1.7, fontSize: '0.95rem' }}>
-              CRC is a War Tycoon faction focused on coordinated gameplay and tactical combat.
-              We prioritize skill development and teamwork.
+            <h2 style={{ fontSize: '1.8rem', marginBottom: '14px' }}>Who We Are</h2>
+            <p style={{ color: 'var(--text)', lineHeight: 1.75, fontSize: '0.95rem' }}>
+              CRC is a War Tycoon faction built around coordinated gameplay and tactical combat.
+              We prioritize skill development and teamwork above everything else.
             </p>
           </div>
 
-          <div className="panel animate-fade-up-d2" style={{ padding: '32px' }}>
-            <div className="mono" style={{ fontSize: '0.65rem', color: 'var(--gold)', letterSpacing: '0.15em', marginBottom: '12px' }}>
-              DIRECTIVE 02 // STANDARDS
+          <div className="panel anim-right d1" style={{ padding: '32px' }}>
+            <div className="mono" style={{ fontSize: '0.6rem', color: 'var(--blue-bright)', letterSpacing: '0.16em', marginBottom: '12px' }}>
+              02 / STANDARDS
             </div>
-            <h2 style={{ fontSize: '1.6rem', marginBottom: '16px' }}>Expectations</h2>
-            <p style={{ color: 'var(--text)', lineHeight: 1.7, fontSize: '0.95rem' }}>
-              Members are expected to participate in operations, communicate effectively, and
-              contribute to the faction&apos;s success on every deployment.
+            <h2 style={{ fontSize: '1.8rem', marginBottom: '14px' }}>Expectations</h2>
+            <p style={{ color: 'var(--text)', lineHeight: 1.75, fontSize: '0.95rem' }}>
+              Members participate in operations, communicate effectively, and contribute
+              to every deployment. We hold each other accountable.
             </p>
           </div>
         </div>
       </section>
 
-      {/* ── Requirements ───────────────────────────────────────── */}
+      {/* ── Requirements ─────────────────────────────────── */}
       <section className="container mx-auto px-6 pb-24">
-        <div className="section-header animate-fade-up">
-          <span className="tag">// ENLISTMENT REQUIREMENTS</span>
+        <div className="section-header anim-right">
+          <span className="tag">Requirements</span>
         </div>
 
-        <div className="panel animate-fade-up-d1" style={{ padding: '40px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '16px', marginBottom: '40px' }}>
+        <div className="panel anim-up d1" style={{ padding: '40px' }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gap: '12px',
+            marginBottom: '36px',
+          }}>
             {[
-              { id: '01', text: 'Active in War Tycoon' },
-              { id: '02', text: 'Decent game knowledge' },
-              { id: '03', text: 'Willingness to listen and improve' },
-              { id: '04', text: 'Seasoned player' },
-              { id: '05', text: 'Complete daily challenges' },
-            ].map((req) => (
+              'Active in War Tycoon',
+              'Decent game knowledge',
+              'Willingness to listen and improve',
+              'Seasoned player',
+              'Complete daily challenges',
+            ].map((req, i) => (
               <div
-                key={req.id}
+                key={i}
+                className="anim-up"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '16px',
-                  padding: '16px',
+                  gap: '12px',
+                  padding: '14px 16px',
                   background: 'var(--bg-surface)',
                   border: '1px solid var(--border-dim)',
+                  transition: 'border-color 0.25s, background 0.25s',
+                  animationDelay: `${i * 0.06}s`,
+                  cursor: 'default',
+                }}
+                onMouseEnter={e => {
+                  const el = e.currentTarget as HTMLElement
+                  el.style.borderColor = 'var(--border-hi)'
+                  el.style.background = 'rgba(37,99,235,0.06)'
+                }}
+                onMouseLeave={e => {
+                  const el = e.currentTarget as HTMLElement
+                  el.style.borderColor = 'var(--border-dim)'
+                  el.style.background = 'var(--bg-surface)'
                 }}
               >
                 <span style={{
-                  fontFamily: "'Share Tech Mono', monospace",
-                  fontSize: '0.7rem',
-                  color: 'var(--gold)',
-                  opacity: 0.6,
-                  minWidth: '24px',
-                }}>
-                  {req.id}
-                </span>
-                <span style={{ color: 'var(--text)', fontSize: '0.9rem' }}>{req.text}</span>
+                  width: 6, height: 6,
+                  borderRadius: '50%',
+                  background: 'var(--blue-bright)',
+                  flexShrink: 0,
+                  animation: `dotPulse 2s ${i * 0.3}s infinite`,
+                }} />
+                <span style={{ color: 'var(--text)', fontSize: '0.9rem' }}>{req}</span>
               </div>
             ))}
           </div>
 
           <div style={{
-            background: 'rgba(184,150,46,0.06)',
+            background: 'rgba(37,99,235,0.06)',
             border: '1px solid var(--border)',
-            borderLeft: '3px solid var(--gold)',
+            borderLeft: '2px solid var(--blue-bright)',
             padding: '24px',
           }}>
-            <div className="mono" style={{ fontSize: '0.65rem', color: 'var(--gold)', letterSpacing: '0.15em', marginBottom: '8px' }}>
+            <div className="mono" style={{ fontSize: '0.6rem', color: 'var(--blue-glow)', letterSpacing: '0.16em', marginBottom: '8px' }}>
               APPLICATION PROCESS
             </div>
-            <p style={{ color: 'var(--text)', fontSize: '0.9rem', lineHeight: 1.6 }}>
+            <p style={{ color: 'var(--text)', fontSize: '0.9rem', lineHeight: 1.7, marginBottom: '20px' }}>
               Staff will review your application and contact you if you meet our requirements.
               Accepted applicants complete a combat test before joining.
             </p>
-            <div style={{ marginTop: '20px' }}>
-              <Link href="/enlist" className="btn-primary" style={{ textDecoration: 'none', display: 'inline-block', fontSize: '0.85rem' }}>
-                Submit Application
-              </Link>
-            </div>
+            <Link href="/enlist" className="btn-primary" style={{ fontSize: '0.9rem', padding: '10px 24px' }}>
+              Apply Now
+            </Link>
           </div>
         </div>
       </section>
