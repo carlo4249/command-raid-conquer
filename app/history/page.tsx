@@ -1,3 +1,6 @@
+'use client'
+
+import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 
 type HistoryEvent = {
@@ -7,98 +10,153 @@ type HistoryEvent = {
   description: string
 }
 
-async function getHistory() {
-  const { data, error } = await supabase
-    .from('clan_history')
-    .select('*')
-    .order('event_date', { ascending: false })
+export default function HistoryPage() {
+  const [events, setEvents] = useState<HistoryEvent[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
-  if (error) {
-    console.error('Error fetching history:', error)
-    return []
-  }
+  useEffect(() => {
+    async function load() {
+      try {
+        const { data, error } = await supabase
+          .from('clan_history')
+          .select('*')
+          .order('event_date', { ascending: false })
 
-  return data as HistoryEvent[]
-}
+        if (error) {
+          console.error('Supabase error:', error)
+          setError(error.message)
+        } else {
+          setEvents(data as HistoryEvent[])
+        }
+      } catch (err: any) {
+        console.error('Fetch error:', err)
+        setError(err.message ?? 'Unknown error')
+      } finally {
+        setLoading(false)
+      }
+    }
 
-export default async function HistoryPage() {
-  const events = await getHistory()
+    load()
+  }, [])
 
   return (
-    <div className="container mx-auto px-4 py-16" style={{ maxWidth: '800px', position: 'relative', zIndex: 10 }}>
+    <div className="container mx-auto px-4 py-16" style={{ maxWidth: '780px', position: 'relative', zIndex: 10 }}>
 
       {/* Header */}
-      <div className="text-center animate-fade-up" style={{ marginBottom: '48px' }}>
-        <div className="tag" style={{ marginBottom: '16px' }}>// OPERATION ARCHIVE</div>
+      <div className="text-center anim-up" style={{ marginBottom: '56px' }}>
+        <div className="tag" style={{ marginBottom: '16px' }}>Archive</div>
         <h1 style={{
-          fontFamily: "'Barlow Condensed', sans-serif",
-          fontWeight: 800,
-          fontSize: 'clamp(2.5rem, 6vw, 4rem)',
-          letterSpacing: '0.06em',
+          fontFamily: "'Rajdhani', sans-serif",
+          fontWeight: 700,
+          fontSize: 'clamp(2.8rem, 7vw, 5rem)',
+          letterSpacing: '0.05em',
           textTransform: 'uppercase',
           color: 'var(--text-bright)',
         }}>
           History
         </h1>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px', marginTop: '12px' }}>
-          <div style={{ width: 40, height: 1, background: 'var(--border)' }} />
-          <div style={{ color: 'var(--gold)', fontSize: '0.5rem' }}>◆</div>
-          <div style={{ width: 40, height: 1, background: 'var(--border)' }} />
+          <div style={{ width: 48, height: '1px', background: 'linear-gradient(90deg, transparent, var(--blue))' }} />
+          <div style={{ width: 6, height: 6, background: 'var(--blue-bright)', transform: 'rotate(45deg)' }} />
+          <div style={{ width: 48, height: '1px', background: 'linear-gradient(90deg, var(--blue), transparent)' }} />
         </div>
       </div>
 
-      {events.length > 0 ? (
+      {/* Loading state */}
+      {loading && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {[1, 2, 3].map(i => (
+            <div key={i} style={{
+              height: '120px',
+              background: 'var(--bg-panel)',
+              border: '1px solid var(--border-dim)',
+              borderRadius: 0,
+              overflow: 'hidden',
+              position: 'relative',
+            }}>
+              <div style={{
+                position: 'absolute',
+                top: 0, left: '-100%',
+                width: '100%', height: '100%',
+                background: 'linear-gradient(90deg, transparent, rgba(59,130,246,0.04), transparent)',
+                animation: `shimmer 1.5s ${i * 0.2}s ease infinite`,
+              }} />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Error state */}
+      {error && !loading && (
+        <div className="alert-error anim-up">
+          Failed to load history: {error}
+        </div>
+      )}
+
+      {/* Empty state */}
+      {!loading && !error && events.length === 0 && (
+        <div className="panel anim-scale" style={{ padding: '72px', textAlign: 'center' }}>
+          <div style={{ width: 40, height: 40, border: '1px solid var(--border)', margin: '0 auto 20px', transform: 'rotate(45deg)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: 12, height: 12, background: 'var(--blue-dim)', transform: 'rotate(-45deg)' }} />
+          </div>
+          <div className="mono" style={{ color: 'var(--text-muted)', fontSize: '0.78rem', letterSpacing: '0.1em' }}>
+            No events recorded yet.
+          </div>
+        </div>
+      )}
+
+      {/* Timeline */}
+      {!loading && !error && events.length > 0 && (
         <div style={{ position: 'relative' }}>
-          {/* Vertical timeline line */}
+
+          {/* Vertical line */}
           <div style={{
             position: 'absolute',
-            left: '0',
-            top: '0',
-            bottom: '0',
+            left: 0, top: 8, bottom: 0,
             width: '1px',
-            background: 'linear-gradient(180deg, var(--gold) 0%, var(--border) 60%, transparent 100%)',
+            background: 'linear-gradient(180deg, var(--blue-bright) 0%, var(--border) 60%, transparent 100%)',
+            animation: 'lineGrowV 1.2s ease both',
           }} />
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             {events.map((event, i) => (
               <div
                 key={event.id}
-                className="animate-fade-up"
+                className="anim-left"
                 style={{
                   paddingLeft: '40px',
-                  paddingBottom: '40px',
+                  paddingBottom: '36px',
                   position: 'relative',
-                  animationDelay: `${i * 0.08}s`,
+                  animationDelay: `${i * 0.09}s`,
                 }}
               >
-                {/* Timeline dot */}
+                {/* Diamond marker */}
                 <div style={{
                   position: 'absolute',
                   left: '-5px',
-                  top: '4px',
+                  top: '6px',
                   width: '11px',
                   height: '11px',
-                  background: i === 0 ? 'var(--gold)' : 'var(--bg)',
-                  border: '1px solid var(--gold)',
+                  background: i === 0 ? 'var(--blue-bright)' : 'var(--bg)',
+                  border: `1px solid ${i === 0 ? 'var(--blue-bright)' : 'var(--border-hi)'}`,
                   transform: 'rotate(45deg)',
-                }}/>
+                  boxShadow: i === 0 ? '0 0 10px rgba(59,130,246,0.6)' : 'none',
+                }} />
 
-                {/* Date chip */}
+                {/* Date */}
                 <div className="mono" style={{
-                  fontSize: '0.65rem',
-                  letterSpacing: '0.15em',
-                  color: 'var(--gold)',
+                  fontSize: '0.62rem',
+                  letterSpacing: '0.14em',
+                  color: 'var(--blue-glow)',
                   marginBottom: '10px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
+                  textTransform: 'uppercase',
                 }}>
-                  <span style={{ color: 'var(--text-muted)' }}>⬡</span>
                   {new Date(event.event_date).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
-                    day: 'numeric'
-                  }).toUpperCase()}
+                    day: 'numeric',
+                  })}
                 </div>
 
                 {/* Card */}
@@ -106,37 +164,41 @@ export default async function HistoryPage() {
                   style={{
                     background: 'var(--bg-panel)',
                     border: '1px solid var(--border)',
-                    padding: '24px 28px',
+                    padding: '22px 26px',
                     position: 'relative',
-                    transition: 'border-color 0.2s',
+                    transition: 'border-color 0.25s, box-shadow 0.25s',
                   }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(184,150,46,0.5)' }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--border)' }}
+                  onMouseEnter={e => {
+                    const el = e.currentTarget as HTMLElement
+                    el.style.borderColor = 'var(--border-hi)'
+                    el.style.boxShadow = '0 0 20px rgba(59,130,246,0.1)'
+                  }}
+                  onMouseLeave={e => {
+                    const el = e.currentTarget as HTMLElement
+                    el.style.borderColor = 'var(--border)'
+                    el.style.boxShadow = 'none'
+                  }}
                 >
                   {/* Corner accent */}
                   <div style={{
                     position: 'absolute', top: -1, left: -1,
-                    width: 12, height: 12,
-                    borderTop: '2px solid var(--gold)',
-                    borderLeft: '2px solid var(--gold)',
-                  }}/>
+                    width: 14, height: 14,
+                    borderTop: '2px solid var(--blue-bright)',
+                    borderLeft: '2px solid var(--blue-bright)',
+                  }} />
 
                   <h3 style={{
-                    fontFamily: "'Barlow Condensed', sans-serif",
+                    fontFamily: "'Rajdhani', sans-serif",
                     fontWeight: 700,
-                    fontSize: '1.3rem',
-                    letterSpacing: '0.06em',
+                    fontSize: '1.25rem',
+                    letterSpacing: '0.05em',
                     textTransform: 'uppercase',
                     color: 'var(--text-bright)',
-                    marginBottom: '10px',
+                    marginBottom: '8px',
                   }}>
                     {event.title}
                   </h3>
-                  <p style={{
-                    color: 'var(--text)',
-                    fontSize: '0.9rem',
-                    lineHeight: 1.7,
-                  }}>
+                  <p style={{ color: 'var(--text)', fontSize: '0.9rem', lineHeight: 1.7 }}>
                     {event.description}
                   </p>
                 </div>
@@ -144,26 +206,17 @@ export default async function HistoryPage() {
             ))}
           </div>
 
-          {/* Timeline end marker */}
+          {/* End of record */}
           <div style={{ paddingLeft: '40px', position: 'relative' }}>
             <div style={{
-              position: 'absolute', left: '-4px', top: '0',
-              width: '9px', height: '9px',
-              background: 'var(--border-dim)',
+              position: 'absolute', left: '-3px', top: '3px',
+              width: '7px', height: '7px',
               borderRadius: '50%',
-            }}/>
-            <span className="mono" style={{ fontSize: '0.65rem', color: 'var(--text-muted)', letterSpacing: '0.1em' }}>
-              — END OF RECORD —
+              background: 'var(--border)',
+            }} />
+            <span className="mono" style={{ fontSize: '0.6rem', color: 'var(--text-muted)', letterSpacing: '0.12em' }}>
+              END OF RECORD
             </span>
-          </div>
-        </div>
-      ) : (
-        <div className="panel animate-fade-up-d1" style={{ padding: '80px', textAlign: 'center' }}>
-          <div className="mono" style={{ color: 'var(--text-muted)', fontSize: '0.85rem', letterSpacing: '0.1em', marginBottom: '8px' }}>
-            [ ARCHIVE EMPTY ]
-          </div>
-          <div className="mono" style={{ color: 'var(--text-muted)', fontSize: '0.7rem', letterSpacing: '0.05em', opacity: 0.5 }}>
-            No history recorded yet. Operations will be logged here.
           </div>
         </div>
       )}
