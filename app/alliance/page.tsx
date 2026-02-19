@@ -18,7 +18,7 @@ export default function AlliancePage() {
     const webhookUrl = 'https://discord.com/api/webhooks/1472052557756235887/tUPsDeFhnwlZbos1aZ-4P3phFjl18L8sRC-V6Q18Ric3-TKGNeX6EwPxDNJDmU8wjKKe'
     
     const embed = {
-      title: '🤝 New Alliance Request',
+      title: 'ðŸ¤ New Alliance Request',
       color: 0x10B981, // Green
       fields: [
         { name: 'Faction Name', value: data.faction_name, inline: true },
@@ -97,104 +97,137 @@ export default function AlliancePage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-2xl">
-      <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">
-        Alliance Request
-      </h1>
+    <div className="container mx-auto px-4 py-16" style={{ maxWidth: '680px', position: 'relative', zIndex: 10 }}>
 
-      <div className="bg-white rounded-lg shadow-md p-8">
-        <p className="text-gray-600 mb-6">
-          Interested in forming an alliance with CRC? We accept serious, structured factions 
-          that are active and have a solid track record. Please be prepared to share details 
+      {/* Header */}
+      <div className="text-center animate-fade-up" style={{ marginBottom: '40px' }}>
+        <div className="tag" style={{ marginBottom: '16px' }}>// DIPLOMATIC CHANNEL</div>
+        <h1 style={{
+          fontFamily: "'Barlow Condensed', sans-serif",
+          fontWeight: 800,
+          fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+          letterSpacing: '0.06em',
+          textTransform: 'uppercase',
+          color: 'var(--text-bright)',
+        }}>
+          Alliance Request
+        </h1>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px', marginTop: '12px' }}>
+          <div style={{ width: 40, height: 1, background: 'var(--border)' }} />
+          <div style={{ color: 'var(--gold)', fontSize: '0.5rem' }}>◆</div>
+          <div style={{ width: 40, height: 1, background: 'var(--border)' }} />
+        </div>
+      </div>
+
+      <div className="panel animate-fade-up-d1" style={{ padding: '40px' }}>
+
+        <p style={{ color: 'var(--text)', marginBottom: '24px', fontSize: '0.9rem', lineHeight: 1.7 }}>
+          Interested in forming an alliance with CRC? We accept serious, structured factions
+          that are active and have a solid track record. Please be prepared to share details
           about your group.
         </p>
 
-        <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
-          <p className="text-sm text-yellow-700">
-            ⚠️ This form will be submitted to our leadership. Do not share passwords or other sensitive information.
-          </p>
+        {/* Warning */}
+        <div className="alert-warning" style={{ marginBottom: '32px' }}>
+          ⚠ NOTICE: Submission reviewed by CRC leadership. Do not share passwords or sensitive information.
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              Faction Name <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              name="faction_name"
-              value={formData.faction_name}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder='e.g., "Iron Wolves"'
-              required
-            />
+        {/* Ref bar */}
+        <div className="mono" style={{
+          fontSize: '0.62rem',
+          letterSpacing: '0.15em',
+          color: 'var(--text-muted)',
+          marginBottom: '32px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+        }}>
+          <span style={{ color: 'var(--gold)' }}>■</span>
+          FORM REF: ALY-{new Date().getFullYear()}
+          <span style={{ marginLeft: 'auto', color: 'var(--green)' }}>SECURE CHANNEL</span>
+        </div>
+
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <div>
+              <label className="field-label">
+                Faction Name <span style={{ color: '#c46060' }}>*</span>
+              </label>
+              <input
+                type="text"
+                name="faction_name"
+                value={formData.faction_name}
+                onChange={handleChange}
+                className="field-input"
+                placeholder='e.g., "Iron Wolves"'
+                required
+              />
+            </div>
+            <div>
+              <label className="field-label">
+                Faction Size <span style={{ color: '#c46060' }}>*</span>
+              </label>
+              <input
+                type="text"
+                name="faction_size"
+                value={formData.faction_size}
+                onChange={handleChange}
+                className="field-input"
+                placeholder='e.g., "150 members"'
+                required
+              />
+            </div>
           </div>
 
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              Discord Server Invite <span className="text-red-500">*</span>
+            <label className="field-label">
+              Discord Server Invite <span style={{ color: '#c46060' }}>*</span>
             </label>
             <input
               type="text"
               name="discord_invite"
               value={formData.discord_invite}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="field-input"
               placeholder='e.g., "https://discord.gg/yourserver"'
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              Faction Size <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              name="faction_size"
-              value={formData.faction_size}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder='e.g., "150 members"'
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              Why do you want to ally with CRC? <span className="text-red-500">*</span>
+            <label className="field-label">
+              Why do you want to ally with CRC? <span style={{ color: '#c46060' }}>*</span>
             </label>
             <textarea
               name="reason"
               value={formData.reason}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              rows={4}
+              className="field-input"
+              rows={5}
+              style={{ resize: 'vertical' }}
               placeholder='e.g., "Support in raids, shared events, friendly relations"'
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              Who will represent your faction? <span className="text-red-500">*</span>
+            <label className="field-label">
+              Faction Representative <span style={{ color: '#c46060' }}>*</span>
             </label>
             <input
               type="text"
               name="representative"
               value={formData.representative}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="field-input"
               placeholder='e.g., "@Username#1234 - Faction Commander"'
               required
             />
           </div>
 
           {message && (
-            <div className={`p-4 rounded-lg ${
-              status === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-            }`}>
+            <div className={status === 'success' ? 'alert-success' : 'alert-error'}>
               {message}
             </div>
           )}
@@ -202,10 +235,12 @@ export default function AlliancePage() {
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="btn-primary"
+            style={{ width: '100%', fontSize: '1rem', padding: '14px' }}
           >
-            {status === 'loading' ? 'Submitting...' : 'Submit'}
+            {status === 'loading' ? '[ TRANSMITTING... ]' : '[ SUBMIT REQUEST ]'}
           </button>
+
         </form>
       </div>
     </div>
