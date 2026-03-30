@@ -13,7 +13,7 @@ const NAV_LINKS = [
 ]
 
 // Replace with your actual Discord invite link
-const DISCORD_URL = 'https://discord.gg/your-server'
+const DISCORD_URL = 'https://discord.gg/Y4GjEjCtnc'
 
 export default function NavClient() {
   const pathname = usePathname()
