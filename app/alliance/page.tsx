@@ -15,27 +15,12 @@ export default function AlliancePage() {
   const [message, setMessage] = useState('')
 
   const sendDiscordNotification = async (data: typeof formData) => {
-    const webhookUrl = 'https://discord.com/api/webhooks/1472052557756235887/tUPsDeFhnwlZbos1aZ-4P3phFjl18L8sRC-V6Q18Ric3-TKGNeX6EwPxDNJDmU8wjKKe'
-    
-    const embed = {
-      title: 'New Alliance Request',
-      color: 0x10B981,
-      fields: [
-        { name: 'Faction Name', value: data.faction_name, inline: true },
-        { name: 'Faction Size', value: data.faction_size, inline: true },
-        { name: 'Discord Invite', value: data.discord_invite, inline: false },
-        { name: 'Reason for Alliance', value: data.reason, inline: false },
-        { name: 'Representative', value: data.representative, inline: false }
-      ],
-      timestamp: new Date().toISOString(),
-      footer: { text: 'CRC Alliance' }
-    }
-
+    // Webhook URL lives server-side in DISCORD_WEBHOOK_URL - never exposed to the client
     try {
-      await fetch(webhookUrl, {
+      await fetch('/api/notify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ embeds: [embed] })
+        body: JSON.stringify({ type: 'alliance', data }),
       })
     } catch (error) {
       console.error('Failed to send Discord notification:', error)
@@ -47,7 +32,7 @@ export default function AlliancePage() {
     setStatus('loading')
     setMessage('')
 
-    if (!formData.faction_name || !formData.discord_invite || !formData.faction_size || 
+    if (!formData.faction_name || !formData.discord_invite || !formData.faction_size ||
         !formData.reason || !formData.representative) {
       setStatus('error')
       setMessage('Please fill in all required fields.')
@@ -70,7 +55,9 @@ export default function AlliancePage() {
 
       if (error) throw error
 
-      await sendDiscordNotification(formData)
+      sendDiscordNotification(formData).catch(err => {
+        console.error('Discord notification failed but form saved:', err)
+      })
 
       setStatus('success')
       setMessage('Request submitted. Our leadership will review it and contact you.')
