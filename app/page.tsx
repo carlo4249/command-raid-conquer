@@ -3,7 +3,7 @@
 import Link from 'next/link'
 
 // Replace with your actual Discord invite link
-const DISCORD_URL = 'https://discord.gg/your-server'
+const DISCORD_URL = 'https://discord.gg/Y4GjEjCtnc'
 
 export default function Home() {
   return (
