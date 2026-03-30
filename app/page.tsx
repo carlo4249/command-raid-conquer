@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 
-const DISCORD_URL = 'https://discord.gg/your-server'
+const DISCORD_URL = 'https://discord.gg/Y4GjEjCtnc'
 
 const GAMES = [
   {
