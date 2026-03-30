@@ -18,38 +18,16 @@ export default function EnlistPage() {
   const [message, setMessage] = useState('')
 
   const sendDiscordNotification = async (data: typeof formData) => {
-    const webhookUrl = 'https://discord.com/api/webhooks/1472052557756235887/tUPsDeFhnwlZbos1aZ-4P3phFjl18L8sRC-V6Q18Ric3-TKGNeX6EwPxDNJDmU8wjKKe'
-    
-    const embed = {
-      title: 'New Enlistment Application',
-      color: 0x3B82F6,
-      fields: [
-        { name: 'Roblox Username', value: data.roblox_username, inline: true },
-        { name: 'Discord', value: data.discord_username, inline: true },
-        { name: 'Age', value: data.age, inline: true },
-        { name: 'Play Duration', value: data.play_duration, inline: false },
-        { name: 'Rebirths', value: data.rebirths, inline: true },
-        { name: 'Previous Factions', value: data.previous_factions || 'None', inline: false },
-        { name: 'Role', value: data.role, inline: false },
-        { name: 'Contribution', value: data.contribution, inline: false }
-      ],
-      timestamp: new Date().toISOString(),
-      footer: { text: 'CRC Enlistment' }
-    }
-
+    // Webhook URL lives server-side in DISCORD_WEBHOOK_URL - never exposed to the client
     try {
-      const response = await fetch(webhookUrl, {
+      await fetch('/api/notify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ embeds: [embed] })
+        body: JSON.stringify({ type: 'enlistment', data }),
       })
-      
-      if (!response.ok) {
-        console.error('Discord webhook failed:', response.status, await response.text())
-      }
     } catch (error) {
       console.error('Failed to send Discord notification:', error)
-      // Don't throw - we still want the DB save to succeed
+      // Non-fatal: DB save already succeeded
     }
   }
 
@@ -58,7 +36,7 @@ export default function EnlistPage() {
     setStatus('loading')
     setMessage('')
 
-    if (!formData.roblox_username || !formData.discord_username || !formData.age || 
+    if (!formData.roblox_username || !formData.discord_username || !formData.age ||
         !formData.play_duration || !formData.rebirths || !formData.role || !formData.contribution) {
       setStatus('error')
       setMessage('Please fill in all required fields.')
@@ -110,10 +88,11 @@ export default function EnlistPage() {
         role: '',
         contribution: ''
       })
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error submitting application:', error)
       setStatus('error')
-      setMessage(`Failed to submit: ${error.message || 'Please try again.'}`)
+      const msg = error instanceof Error ? error.message : 'Please try again.'
+      setMessage(`Failed to submit: ${msg}`)
     }
   }
 
