@@ -12,6 +12,9 @@ const NAV_LINKS = [
   { href: '/history',  label: 'History' },
 ]
 
+// Replace with your actual Discord invite link
+const DISCORD_URL = 'https://discord.gg/your-server'
+
 export default function NavClient() {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
@@ -66,7 +69,7 @@ export default function NavClient() {
           </div>
         </Link>
 
-        {/* Desktop links */}
+        {/* Desktop links + Discord CTA */}
         <div className="hidden md:flex items-center" style={{ gap: '2px' }}>
           {NAV_LINKS.map(link => {
             const active = pathname === link.href
@@ -108,6 +111,44 @@ export default function NavClient() {
               </Link>
             )
           })}
+
+          {/* Discord CTA -- present on every professional gaming org nav */}
+          <a
+            href={DISCORD_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              fontFamily: "'Rajdhani', sans-serif",
+              fontWeight: 700,
+              fontSize: '0.82rem',
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+              padding: '6px 18px',
+              marginLeft: '12px',
+              color: 'var(--blue-glow)',
+              border: '1px solid var(--border-hi)',
+              background: 'rgba(59,130,246,0.07)',
+              transition: 'background 0.2s, box-shadow 0.2s, color 0.2s',
+              clipPath: 'polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)',
+              display: 'inline-flex',
+              alignItems: 'center',
+            }}
+            onMouseEnter={e => {
+              const el = e.currentTarget as HTMLElement
+              el.style.background = 'rgba(59,130,246,0.18)'
+              el.style.boxShadow = '0 0 16px rgba(59,130,246,0.3)'
+              el.style.color = '#fff'
+            }}
+            onMouseLeave={e => {
+              const el = e.currentTarget as HTMLElement
+              el.style.background = 'rgba(59,130,246,0.07)'
+              el.style.boxShadow = 'none'
+              el.style.color = 'var(--blue-glow)'
+            }}
+          >
+            Discord
+          </a>
         </div>
 
         {/* Mobile burger */}
@@ -162,6 +203,27 @@ export default function NavClient() {
               {link.label}
             </Link>
           ))}
+
+          {/* Discord in mobile menu */}
+          <a
+            href={DISCORD_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMenuOpen(false)}
+            style={{
+              display: 'block',
+              fontFamily: "'Rajdhani', sans-serif",
+              fontWeight: 700,
+              fontSize: '1rem',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+              color: 'var(--blue-bright)',
+              padding: '12px 0',
+            }}
+          >
+            Discord
+          </a>
         </div>
       )}
     </nav>
