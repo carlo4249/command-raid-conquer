@@ -2,6 +2,9 @@
 
 import Link from 'next/link'
 
+// Replace with your actual Discord invite link
+const DISCORD_URL = 'https://discord.gg/your-server'
+
 export default function Home() {
   return (
     <div style={{ position: 'relative', zIndex: 10 }}>
@@ -246,7 +249,7 @@ export default function Home() {
       </section>
 
       {/* ── Requirements ─────────────────────────────────── */}
-      <section className="container mx-auto px-6 pb-24">
+      <section className="container mx-auto px-6 pb-20">
         <div className="section-header anim-right">
           <span className="tag">Requirements</span>
         </div>
@@ -316,6 +319,56 @@ export default function Home() {
               Accepted applicants complete a combat test before joining.
             </p>
             <Link href="/enlist" className="btn-primary" style={{ fontSize: '0.9rem', padding: '10px 24px' }}>
+              Apply Now
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Discord CTA ───────────────────────────────────── */}
+      {/* Inspired by how Cloud9, Team Liquid, etc. always have a prominent community CTA */}
+      <section className="container mx-auto px-6 pb-24">
+        <div
+          className="panel anim-up d1"
+          style={{
+            padding: '48px 40px',
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: '32px',
+            borderLeft: '3px solid var(--blue-bright)',
+            background: 'linear-gradient(135deg, var(--bg-panel) 60%, rgba(37,99,235,0.06) 100%)',
+          }}
+        >
+          <div style={{ flex: '1 1 280px' }}>
+            <div className="mono" style={{ fontSize: '0.6rem', color: 'var(--blue-bright)', letterSpacing: '0.16em', marginBottom: '14px' }}>
+              COMMS CHANNEL
+            </div>
+            <h2 style={{ fontSize: '2rem', marginBottom: '14px', letterSpacing: '0.06em' }}>
+              Join the Discord
+            </h2>
+            <p style={{ color: 'var(--text)', fontSize: '0.92rem', lineHeight: 1.75, maxWidth: '480px' }}>
+              All operations, raid briefings, and faction coordination happen in our server.
+              Active members are expected to stay connected.
+            </p>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', flexShrink: 0 }}>
+            <a
+              href={DISCORD_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+              style={{ fontSize: '0.92rem', padding: '12px 32px', textAlign: 'center' }}
+            >
+              Join Server
+            </a>
+            <Link
+              href="/enlist"
+              className="btn-secondary"
+              style={{ fontSize: '0.92rem', padding: '11px 32px', textAlign: 'center' }}
+            >
               Apply Now
             </Link>
           </div>
