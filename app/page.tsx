@@ -21,11 +21,10 @@ const GAMES = [
     platform: 'PC',
     name: 'War Thunder',
     desc: 'Ground and air combined-arms combat. CRC is building a squadron for ranked battles and coordinated matches.',
-    status: 'EXPANDING',
-    statusColor: '#fbbf24',
+    status: 'COMING SOON',
+    statusColor: '#94a3b8',
     statusBg: 'rgba(251,191,36,0.1)',
     href: '/enlist',
-    cta: 'Express Interest',
   },
   {
     platform: 'JAVA / BEDROCK',
@@ -35,7 +34,6 @@ const GAMES = [
     statusColor: '#94a3b8',
     statusBg: 'rgba(148,163,184,0.08)',
     href: '/enlist',
-    cta: 'Stay Updated',
   },
 ]
 
